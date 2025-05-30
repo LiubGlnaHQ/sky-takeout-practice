@@ -78,15 +78,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         // 属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);
-        //2、对密码进行md5加密
+        //2、对默认密码进行md5加密
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
         //3、补全参数
         employee.setStatus(StatusConstant.ENABLE);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        //获取并设置创建人和更新人的id
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
         //4、调用mapper保存
         employeeMapper.insert(employee);
     }
@@ -146,11 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = new Employee();
         // 属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);
-        //2、补全参数
-        employee.setUpdateTime(LocalDateTime.now());
-        //获取并设置更新人的id
-        employee.setUpdateUser(BaseContext.getCurrentId());
-        //3、调用mapper保存
+        //2、调用mapper保存
         employeeMapper.update(employee);
     }
 }
